@@ -12,28 +12,24 @@ class App extends React.Component {
 			tasksData: [],
 			filter: "All",
 		};
-	}
 
-	render() {
-		const { tasksData } = this.state;
+    this.activeTasksCountCalc = () => this.state.tasksData.reduce((prev, item) => {
+      if (item.taskStatus === "Active task") {
+        return prev + 1;
+      }
+      return prev;
+    }, 0);
 
-		const activeTasksCount = tasksData.reduce((prev, item) => {
-			if (item.taskStatus === "Active task") {
-				return prev + 1;
-			}
-			return prev;
-		}, 0);
-
-		const toggleTaskState = (arr, idx, propName, newValue) => {
+    this.toggleTaskState = (arr, idx, propName, newValue) => {
 			const oldItem = arr[idx];
 			return [...arr.slice(0, idx), { ...oldItem, [propName]: newValue }, ...arr.slice(idx + 1)];
 		};
 
-		const onToggleDone = (id) => {
+    this.onToggleDone = (id) => {
 			this.setState((state) => {
 				const idx = state.tasksData.findIndex((item) => item.id === id);
 				return {
-					tasksData: toggleTaskState(
+					tasksData: this.toggleTaskState(
 						state.tasksData,
 						idx,
 						"taskStatus",
@@ -43,10 +39,10 @@ class App extends React.Component {
 			});
 		};
 
-		const onAddTask = (taskLabel) => {
+    this.onAddTask = (taskLabel) => {
 			this.setState({
 				tasksData: [
-					...tasksData,
+					...this.state.tasksData,
 					{
 						id: this.state.tasksData.length,
 						label: taskLabel,
@@ -57,7 +53,7 @@ class App extends React.Component {
 			});
 		};
 
-		const onDeleteTask = (id) => {
+    this.onDeleteTask = (id) => {
 			this.setState((state) => {
 				const idx = state.tasksData.findIndex((item) => item.id === id);
 
@@ -67,44 +63,42 @@ class App extends React.Component {
 			});
 		};
 
-		const onChangeFilter = (filter) => {
+    this.onChangeFilter = (filter) => {
 			this.setState({
 				filter: filter,
 			});
 		};
 
-		const onDeleteCompleted = () => {
+		this.onDeleteCompleted = () => {
 			this.setState({
-				tasksData: tasksData.filter((item) => item.taskStatus !== "Completed task"),
+				tasksData: this.state.tasksData.filter((item) => item.taskStatus !== "Completed task"),
 			});
 		};
 
+    this.tasksFilter = (filter) => {
+      if (filter === "Active") {
+        return this.state.tasksData.filter((item) => item.taskStatus !== "Completed task")
+      } 
+      if (filter === "Completed") {
+        return this.state.tasksData.filter((item) => item.taskStatus !== "Active task")
+      } 
+      return this.state.tasksData
+    }
+	}
+
+	render() {
 		return (
 			<section className="todoapp">
 				<header className="header">
 					<h1>todos</h1>
-					<NewTaskForm onAddTask={onAddTask} />
+					<NewTaskForm onAddTask={this.onAddTask} />
 				</header>
 				<section className="main">
-					{this.state.filter === "All" ? (
-						<TaskList tasksData={tasksData} onToggleDone={onToggleDone} onDeleteTask={onDeleteTask} />
-					) : this.state.filter === "Active" ? (
-						<TaskList
-							tasksData={tasksData.filter((item) => item.taskStatus !== "Completed task")}
-							onToggleDone={onToggleDone}
-							onDeleteTask={onDeleteTask}
-						/>
-					) : (
-						<TaskList
-							tasksData={tasksData.filter((item) => item.taskStatus !== "Active task")}
-							onToggleDone={onToggleDone}
-							onDeleteTask={onDeleteTask}
-						/>
-					)}
+					<TaskList tasksData={this.tasksFilter(this.state.filter)} onToggleDone={this.onToggleDone} onDeleteTask={this.onDeleteTask} />
 					<Footer
-						onDeleteCompleted={onDeleteCompleted}
-						activeTasksCount={activeTasksCount}
-						onChangeFilter={onChangeFilter}
+						onDeleteCompleted={this.onDeleteCompleted}
+						activeTasksCount={this.activeTasksCountCalc()}
+						onChangeFilter={this.onChangeFilter}
 						filter={this.state.filter}
 					/>
 				</section>
