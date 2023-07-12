@@ -2,19 +2,19 @@ import Task from "../Task/Task";
 import "./TaskList.css";
 import PropTypes from "prop-types";
 
-const TaskList = (props) => {
-	const tasks = props.tasksData.map((item) => {
-		const taskClassName = item.taskStatus.split(" ")[0].toLowerCase();
+const TaskList = ({tasksData, onToggleDone, onDeleteTask}) => {
+	const tasks = tasksData.map((item) => {
+		const taskClassName = item.active ? "active" : "completed";
 
 		return (
 			<li className={taskClassName} key={item.id}>
 				<Task
-					taskStatus={item.taskStatus}
+					active={item.active}
 					label={item.label}
 					timeBeginCreate={item.timeBeginCreate}
-					onToggleDone={props.onToggleDone}
+					onToggleDone={onToggleDone}
 					taskId={item.id}
-					onDeleteTask={props.onDeleteTask}
+					onDeleteTask={onDeleteTask}
 				/>
 			</li>
 		);
@@ -31,7 +31,7 @@ TaskList.defaultProps = {
 TaskList.propTypes = {
 	tasksData: PropTypes.arrayOf(
 		PropTypes.shape({
-			taskStatus: PropTypes.string,
+			active: PropTypes.bool,
 			label: PropTypes.string,
 			timeBeginCreate: PropTypes.object,
 			taskId: PropTypes.number,

@@ -15,7 +15,7 @@ class App extends React.Component {
 
 		this.activeTasksCountCalc = () =>
 			this.state.tasksData.reduce((prev, item) => {
-				if (item.taskStatus === "Active task") {
+				if (item.active) {
 					return prev + 1;
 				}
 				return prev;
@@ -33,8 +33,8 @@ class App extends React.Component {
 					tasksData: this.toggleTaskState(
 						state.tasksData,
 						idx,
-						"taskStatus",
-						state.tasksData[idx].taskStatus === "Active task" ? "Completed task" : "Active task"
+						"active",
+						state.tasksData[idx].active = !state.tasksData[idx].active
 					),
 				};
 			});
@@ -47,7 +47,7 @@ class App extends React.Component {
 					{
 						id: this.state.tasksData.length,
 						label: taskLabel,
-						taskStatus: "Active task",
+						active: true,
 						timeBeginCreate: new Date(),
 					},
 				],
@@ -72,16 +72,16 @@ class App extends React.Component {
 
 		this.onDeleteCompleted = () => {
 			this.setState({
-				tasksData: this.state.tasksData.filter((item) => item.taskStatus !== "Completed task"),
+				tasksData: this.state.tasksData.filter((item) => item.active !== false),
 			});
 		};
 
 		this.tasksFilter = (filter) => {
 			if (filter === "Active") {
-				return this.state.tasksData.filter((item) => item.taskStatus !== "Completed task");
+				return this.state.tasksData.filter((item) => item.active !== false);
 			}
 			if (filter === "Completed") {
-				return this.state.tasksData.filter((item) => item.taskStatus !== "Active task");
+				return this.state.tasksData.filter((item) => item.active !== true);
 			}
 			return this.state.tasksData;
 		};

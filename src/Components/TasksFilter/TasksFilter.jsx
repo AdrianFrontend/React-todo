@@ -1,33 +1,18 @@
 import PropTypes from "prop-types";
 import "./TasksFilter.css";
 
-const TasksFilter = (props) => {
+const TasksFilter = ({filter, onChangeFilter}) => {
+  const filters = ["All", "Active", "Completed"]
+
+  const buttons = filters.map((item, idx) => <li key={idx}>
+    <button 
+    className={filter === item ? "selected" : ""}
+    onClick={() => onChangeFilter(item)}>{item}</button>
+  </li>)
+
 	return (
 		<ul className="filters">
-			<li>
-				<button
-					className={props.filter === "All" ? "selected" : ""}
-					onClick={() => props.onChangeFilter("All")}
-				>
-					All
-				</button>
-			</li>
-			<li>
-				<button
-					className={props.filter === "Active" ? "selected" : ""}
-					onClick={() => props.onChangeFilter("Active")}
-				>
-					Active
-				</button>
-			</li>
-			<li>
-				<button
-					className={props.filter === "Completed" ? "selected" : ""}
-					onClick={() => props.onChangeFilter("Completed")}
-				>
-					Completed
-				</button>
-			</li>
+			{buttons}
 		</ul>
 	);
 };

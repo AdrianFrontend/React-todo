@@ -3,11 +3,16 @@ import "./NewTaskForm.css";
 import PropTypes from "prop-types";
 
 class NewTaskForm extends React.Component {
-	state = {
-		currentInputValue: "",
-	};
+  constructor() {
+    super()
+    this.state = {
+      currentInputValue: ""
+    }
+  }
 
 	render() {
+    const {onAddTask} = this.props
+
 		const onSubmit = (e) => {
 			e.preventDefault();
 			if (this.state.currentInputValue === "") {
@@ -19,7 +24,7 @@ class NewTaskForm extends React.Component {
 				return;
 			}
 
-			this.props.onAddTask(this.state.currentInputValue);
+			onAddTask(this.state.currentInputValue);
 			this.setState({
 				currentInputValue: "",
 			});
