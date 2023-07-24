@@ -2,7 +2,7 @@ import TasksFilter from "../TasksFilter/TasksFilter";
 import "./Footer.css";
 import PropTypes from "prop-types";
 
-const Footer = ({onDeleteCompleted, activeTasksCount, onChangeFilter, filter}) => {
+const Footer = ({ onDeleteCompleted, activeTasksCount, onChangeFilter, filter }) => {
 	return (
 		<footer className="footer">
 			<span className="todo-count">{activeTasksCount} items left</span>

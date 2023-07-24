@@ -34,19 +34,23 @@ class App extends React.Component {
 						state.tasksData,
 						idx,
 						"active",
-						state.tasksData[idx].active = !state.tasksData[idx].active
+						(state.tasksData[idx].active = !state.tasksData[idx].active)
 					),
 				};
 			});
 		};
 
-		this.onAddTask = (taskLabel) => {
+		this.onAddTask = (taskLabel, timer) => {
 			this.setState({
 				tasksData: [
 					...this.state.tasksData,
 					{
 						id: this.state.tasksData.length,
 						label: taskLabel,
+						timer: {
+							minutes: timer.minutes,
+							seconds: timer.seconds,
+						},
 						active: true,
 						timeBeginCreate: new Date(),
 					},

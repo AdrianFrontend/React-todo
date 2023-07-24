@@ -2,7 +2,7 @@ import Task from "../Task/Task";
 import "./TaskList.css";
 import PropTypes from "prop-types";
 
-const TaskList = ({tasksData, onToggleDone, onDeleteTask}) => {
+const TaskList = ({ tasksData, onToggleDone, onDeleteTask }) => {
 	const tasks = tasksData.map((item) => {
 		const taskClassName = item.active ? "active" : "completed";
 
@@ -11,6 +11,7 @@ const TaskList = ({tasksData, onToggleDone, onDeleteTask}) => {
 				<Task
 					active={item.active}
 					label={item.label}
+					timer={item.timer}
 					timeBeginCreate={item.timeBeginCreate}
 					onToggleDone={onToggleDone}
 					taskId={item.id}
@@ -33,6 +34,7 @@ TaskList.propTypes = {
 		PropTypes.shape({
 			active: PropTypes.bool,
 			label: PropTypes.string,
+			timer: PropTypes.object,
 			timeBeginCreate: PropTypes.object,
 			taskId: PropTypes.number,
 		})
