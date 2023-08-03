@@ -2,7 +2,7 @@ import Task from "../Task/Task";
 import "./TaskList.css";
 import PropTypes from "prop-types";
 
-const TaskList = ({ tasksData, onToggleDone, onDeleteTask }) => {
+const TaskList = ({ tasksData, onToggleDone, onDeleteTask, setTimeInState }) => {
 	const tasks = tasksData.map((item) => {
 		const taskClassName = item.active ? "active" : "completed";
 
@@ -16,6 +16,7 @@ const TaskList = ({ tasksData, onToggleDone, onDeleteTask }) => {
 					onToggleDone={onToggleDone}
 					taskId={item.id}
 					onDeleteTask={onDeleteTask}
+					setTimeInState={setTimeInState}
 				/>
 			</li>
 		);
@@ -41,6 +42,7 @@ TaskList.propTypes = {
 	),
 	onToggleDone: PropTypes.func,
 	onDeleteTask: PropTypes.func,
+	setTimeInState: PropTypes.func,
 };
 
 export default TaskList;

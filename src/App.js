@@ -58,6 +58,20 @@ class App extends React.Component {
 			});
 		};
 
+		this.setTimeInState = (m, s, id) => {
+			this.setState((state) => {
+				const idx = state.tasksData.findIndex((item) => item.id === id);
+
+				return {
+					tasksData: [
+						...state.tasksData.slice(0, idx),
+						(state.tasksData[idx] = { ...state.tasksData[idx], timer: { minutes: m, seconds: s } }),
+						...state.tasksData.slice(idx + 1),
+					],
+				};
+			});
+		};
+
 		this.onDeleteTask = (id) => {
 			this.setState((state) => {
 				const idx = state.tasksData.findIndex((item) => item.id === id);
@@ -103,6 +117,7 @@ class App extends React.Component {
 						tasksData={this.tasksFilter(this.state.filter)}
 						onToggleDone={this.onToggleDone}
 						onDeleteTask={this.onDeleteTask}
+						setTimeInState={this.setTimeInState}
 					/>
 					<Footer
 						onDeleteCompleted={this.onDeleteCompleted}

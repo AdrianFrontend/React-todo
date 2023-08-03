@@ -4,7 +4,7 @@ import KG from "date-fns/locale/en-AU";
 import PropTypes from "prop-types";
 import Timer from "../Timer/Timer";
 
-const Task = ({ active, label, timer, timeBeginCreate, onToggleDone, taskId, onDeleteTask }) => {
+const Task = ({ active, label, timer, timeBeginCreate, onToggleDone, taskId, onDeleteTask, setTimeInState }) => {
 	let checkboxChecked = !active;
 
 	return (
@@ -12,7 +12,16 @@ const Task = ({ active, label, timer, timeBeginCreate, onToggleDone, taskId, onD
 			<input className="toggle" type="checkbox" checked={checkboxChecked} onChange={() => onToggleDone(taskId)} />
 			<label>
 				<span className="title">{label}</span>
-				<Timer seconds={timer.seconds} minutes={timer.minutes} />
+				{active ? (
+					<Timer
+						seconds={timer.seconds}
+						minutes={timer.minutes}
+						setTimeInState={setTimeInState}
+						taskId={taskId}
+					/>
+				) : (
+					<span className="description">00:00</span>
+				)}
 				<span className="description">
 					{`created ${formatDistanceToNow(timeBeginCreate, {
 						includeSeconds: true,
@@ -40,6 +49,7 @@ Task.propTypes = {
 	taskId: PropTypes.number.isRequired,
 	onToggleDone: PropTypes.func,
 	onDeleteTask: PropTypes.func,
+	setTimeInState: PropTypes.func,
 };
 
 export default Task;
