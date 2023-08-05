@@ -12,11 +12,7 @@ const TasksFilter = ({ filter, setFilter }) => {
 		</li>
 	));
 
-	return (
-		<ul className="filters">
-			{buttons}
-		</ul>
-	);
+	return <ul className="filters">{buttons}</ul>;
 };
 
 TasksFilter.defaultProps = {

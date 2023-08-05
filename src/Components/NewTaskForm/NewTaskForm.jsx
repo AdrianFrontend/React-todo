@@ -3,16 +3,15 @@ import "./NewTaskForm.css";
 import PropTypes from "prop-types";
 
 const NewTaskForm = ({ onAddTask }) => {
-
 	const initialState = useMemo(() => {
 		return {
 			currentNameInputValue: "",
 			currentMinutesInputValue: "",
 			currentSecondsInputValue: "",
-		}
-	}, [])
+		};
+	}, []);
 
-	const [inputValues, setInputValues] = useState(initialState)
+	const [inputValues, setInputValues] = useState(initialState);
 
 	const onSubmit = (e) => {
 		e.preventDefault();
@@ -81,14 +80,14 @@ const NewTaskForm = ({ onAddTask }) => {
 			></button>
 		</form>
 	);
-}
+};
 
 NewTaskForm.defaultProps = {
 	// onAddTask: () => {},
 };
 
 NewTaskForm.propTypes = {
-	onAddTask: PropTypes.func
+	onAddTask: PropTypes.func,
 };
 
 export default NewTaskForm;
