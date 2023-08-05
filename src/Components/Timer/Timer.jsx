@@ -1,5 +1,4 @@
-import PropTypes from "prop-types";
-import "./Timer.css";
+import PropTypes from "prop-types"
 
 const Timer = ({ minutes, seconds, onTimerPaused, taskId }) => {
 	return (
