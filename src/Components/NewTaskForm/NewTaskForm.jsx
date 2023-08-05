@@ -1,54 +1,86 @@
-import React from "react";
+import { useMemo, useState } from "react";
 import "./NewTaskForm.css";
 import PropTypes from "prop-types";
 
-class NewTaskForm extends React.Component {
-  constructor() {
-    super()
-    this.state = {
-      currentInputValue: ""
-    }
-  }
-
-	render() {
-    const {onAddTask} = this.props
-
-		const onSubmit = (e) => {
-			e.preventDefault();
-			if (this.state.currentInputValue === "") {
-				return;
-			} else if (this.state.currentInputValue.trim() === "") {
-				this.setState({
-					currentInputValue: "",
-				});
-				return;
-			}
-
-			onAddTask(this.state.currentInputValue);
-			this.setState({
-				currentInputValue: "",
-			});
+const NewTaskForm = ({ onAddTask }) => {
+	const initialState = useMemo(() => {
+		return {
+			currentNameInputValue: "",
+			currentMinutesInputValue: "",
+			currentSecondsInputValue: "",
 		};
+	}, []);
 
-		const onChange = (e) => {
-			this.setState({
-				currentInputValue: e.target.value,
+	const [inputValues, setInputValues] = useState(initialState);
+
+	const onSubmit = (e) => {
+		e.preventDefault();
+
+		if (inputValues.currentNameInputValue === "") {
+			return;
+		} else if (inputValues.currentNameInputValue.trim() === "") {
+			setInputValues(initialState);
+			return;
+		}
+
+		onAddTask(inputValues.currentNameInputValue, {
+			minutes: Number(inputValues.currentMinutesInputValue),
+			seconds: Number(inputValues.currentSecondsInputValue),
+		});
+
+		setInputValues(initialState);
+	};
+
+	const onChange = (e, name, validation) => {
+		if (
+			(validation === "number" && !!Number(e.target.value) && e.target.value <= 60) ||
+			e.target.value.length === 0
+		) {
+			setInputValues({
+				...inputValues,
+				[name]: e.target.value,
 			});
-		};
+		} else if (validation === "none") {
+			setInputValues({
+				...inputValues,
+				[name]: e.target.value,
+			});
+		}
+	};
 
-		return (
-			<form onSubmit={onSubmit}>
-				<input
-					className="new-todo"
-					placeholder="What needs to be done?"
-					autoFocus
-					onChange={onChange}
-					value={this.state.currentInputValue}
-				/>
-			</form>
-		);
-	}
-}
+	return (
+		<form onSubmit={onSubmit} className="new-todo-form">
+			<input
+				className="new-todo"
+				placeholder="What needs to be done?"
+				autoFocus
+				onChange={(e) => onChange(e, "currentNameInputValue", "none")}
+				value={inputValues.currentNameInputValue}
+			/>
+			<input
+				className="new-todo-form__timer"
+				placeholder="Min"
+				onChange={(e) => onChange(e, "currentMinutesInputValue", "number")}
+				value={inputValues.currentMinutesInputValue}
+				maxLength={2}
+			/>
+			<input
+				className="new-todo-form__timer"
+				placeholder="Sec"
+				onChange={(e) => onChange(e, "currentSecondsInputValue", "number")}
+				value={inputValues.currentSecondsInputValue}
+				maxLength={2}
+			/>
+			<button
+				type="submit"
+				style={{
+					width: 0,
+					height: 0,
+				}}
+			></button>
+		</form>
+	);
+};
 
 NewTaskForm.defaultProps = {
 	// onAddTask: () => {},
