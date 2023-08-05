@@ -12,61 +12,6 @@ const App = () => {
 
 	const tick = () => {
 
-<<<<<<< Updated upstream
-		this.onToggleDone = (id) => {
-			this.setState((state) => {
-				const idx = state.tasksData.findIndex((item) => item.id === id);
-				return {
-					tasksData: this.toggleTaskState(
-						state.tasksData,
-						idx,
-						"active",
-						state.tasksData[idx].active = !state.tasksData[idx].active
-					),
-				};
-			});
-		};
-
-		this.onAddTask = (taskLabel) => {
-			this.setState({
-				tasksData: [
-					...this.state.tasksData,
-					{
-						id: this.state.tasksData.length,
-						label: taskLabel,
-						active: true,
-						timeBeginCreate: new Date(),
-					},
-				],
-			});
-		};
-
-		this.onDeleteTask = (id) => {
-			this.setState((state) => {
-				const idx = state.tasksData.findIndex((item) => item.id === id);
-
-				return {
-					tasksData: [...state.tasksData.slice(0, idx), ...state.tasksData.slice(idx + 1)],
-				};
-			});
-		};
-
-		this.onChangeFilter = (filter) => {
-			this.setState({
-				filter: filter,
-			});
-		};
-
-		this.onDeleteCompleted = () => {
-			this.setState({
-				tasksData: this.state.tasksData.filter((item) => item.active !== false),
-			});
-		};
-
-		this.tasksFilter = (filter) => {
-			if (filter === "Active") {
-				return this.state.tasksData.filter((item) => item.active !== false);
-=======
 		tasksData.forEach(item => {
 			if (item.timer.paused || item.timer.over || !item.active) return;
 
@@ -83,7 +28,6 @@ const App = () => {
 				setTimeInState(item.timer.minutes - 1, 59, item.id);
 			} else {
 				setTimeInState(item.timer.minutes, item.timer.seconds - 1, item.id);
->>>>>>> Stashed changes
 			}
 		})
 	};
@@ -105,29 +49,6 @@ const App = () => {
 		}, 0);
 	}
 
-<<<<<<< Updated upstream
-	render() {
-		return (
-			<section className="todoapp">
-				<header className="header">
-					<h1>todos</h1>
-					<NewTaskForm onAddTask={this.onAddTask} />
-				</header>
-				<section className="main">
-					<TaskList
-						tasksData={this.tasksFilter(this.state.filter)}
-						onToggleDone={this.onToggleDone}
-						onDeleteTask={this.onDeleteTask}
-					/>
-					<Footer
-						onDeleteCompleted={this.onDeleteCompleted}
-						activeTasksCount={this.activeTasksCountCalc()}
-						onChangeFilter={this.onChangeFilter}
-						filter={this.state.filter}
-					/>
-				</section>
-			</section>
-=======
 	const toggleTaskState = (arr, idx, propName, newValue) => {
 		const oldItem = arr[idx];
 		return [...arr.slice(0, idx), { ...oldItem, [propName]: newValue }, ...arr.slice(idx + 1)];
@@ -143,7 +64,6 @@ const App = () => {
 				"active",
 				(tasksData[idx].active = !tasksData[idx].active)
 			)
->>>>>>> Stashed changes
 		);
 
 	};

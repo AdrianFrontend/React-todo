@@ -2,33 +2,6 @@ import { useMemo, useState } from "react";
 import "./NewTaskForm.css";
 import PropTypes from "prop-types";
 
-<<<<<<< Updated upstream
-class NewTaskForm extends React.Component {
-  constructor() {
-    super()
-    this.state = {
-      currentInputValue: ""
-    }
-  }
-
-	render() {
-    const {onAddTask} = this.props
-
-		const onSubmit = (e) => {
-			e.preventDefault();
-			if (this.state.currentInputValue === "") {
-				return;
-			} else if (this.state.currentInputValue.trim() === "") {
-				this.setState({
-					currentInputValue: "",
-				});
-				return;
-			}
-
-			onAddTask(this.state.currentInputValue);
-			this.setState({
-				currentInputValue: "",
-=======
 const NewTaskForm = ({ onAddTask }) => {
 
 	const initialState = useMemo(() => {
@@ -72,31 +45,10 @@ const NewTaskForm = ({ onAddTask }) => {
 			setInputValues({
 				...inputValues,
 				[name]: e.target.value,
->>>>>>> Stashed changes
 			});
 		}
 	};
 
-<<<<<<< Updated upstream
-		const onChange = (e) => {
-			this.setState({
-				currentInputValue: e.target.value,
-			});
-		};
-
-		return (
-			<form onSubmit={onSubmit}>
-				<input
-					className="new-todo"
-					placeholder="What needs to be done?"
-					autoFocus
-					onChange={onChange}
-					value={this.state.currentInputValue}
-				/>
-			</form>
-		);
-	}
-=======
 	return (
 		<form onSubmit={onSubmit} className="new-todo-form">
 			<input
@@ -129,7 +81,6 @@ const NewTaskForm = ({ onAddTask }) => {
 			></button>
 		</form>
 	);
->>>>>>> Stashed changes
 }
 
 NewTaskForm.defaultProps = {

@@ -3,11 +3,7 @@ import { formatDistanceToNow } from "date-fns";
 import KG from "date-fns/locale/en-AU";
 import PropTypes from "prop-types";
 
-<<<<<<< Updated upstream
-const Task = ({active, label, timeBeginCreate, onToggleDone, taskId, onDeleteTask}) => {
-=======
 const Task = ({ active, label, timer, timeBeginCreate, onToggleDone, taskId, onDeleteTask, onTimerPaused }) => {
->>>>>>> Stashed changes
 	let checkboxChecked = !active;
 
 	return (
@@ -19,10 +15,6 @@ const Task = ({ active, label, timer, timeBeginCreate, onToggleDone, taskId, onD
 				onChange={() => onToggleDone(taskId)}
 			/>
 			<label>
-<<<<<<< Updated upstream
-				<span className="description">{label}</span>
-				<span className="created">
-=======
 				<span className="title">{label}</span>
 				{active ? (
 					<Timer
@@ -35,7 +27,6 @@ const Task = ({ active, label, timer, timeBeginCreate, onToggleDone, taskId, onD
 					<span className="description">00:00</span>
 				)}
 				<span className="description">
->>>>>>> Stashed changes
 					{`created ${formatDistanceToNow(timeBeginCreate, {
 						includeSeconds: true,
 						locale: KG,
@@ -61,11 +52,8 @@ Task.propTypes = {
 	taskId: PropTypes.number.isRequired,
 	onToggleDone: PropTypes.func,
 	onDeleteTask: PropTypes.func,
-<<<<<<< Updated upstream
-=======
 	setTimeInState: PropTypes.func,
 	onTimerPaused: PropTypes.func
->>>>>>> Stashed changes
 };
 
 export default Task;

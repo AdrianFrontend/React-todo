@@ -1,16 +1,6 @@
 import PropTypes from "prop-types";
 import "./TasksFilter.css";
 
-<<<<<<< Updated upstream
-const TasksFilter = ({filter, onChangeFilter}) => {
-  const filters = ["All", "Active", "Completed"]
-
-  const buttons = filters.map((item, idx) => <li key={idx}>
-    <button 
-    className={filter === item ? "selected" : ""}
-    onClick={() => onChangeFilter(item)}>{item}</button>
-  </li>)
-=======
 const TasksFilter = ({ filter, setFilter }) => {
 	const filters = ["All", "Active", "Completed"];
 
@@ -21,7 +11,6 @@ const TasksFilter = ({ filter, setFilter }) => {
 			</button>
 		</li>
 	));
->>>>>>> Stashed changes
 
 	return (
 		<ul className="filters">
