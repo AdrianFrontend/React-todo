@@ -2,7 +2,11 @@ import Task from "../Task/Task";
 import "./TaskList.css";
 import PropTypes from "prop-types";
 
+<<<<<<< Updated upstream
 const TaskList = ({tasksData, onToggleDone, onDeleteTask}) => {
+=======
+const TaskList = ({ tasksData, onToggleDone, onDeleteTask, setTimeInState, onTimerPaused }) => {
+>>>>>>> Stashed changes
 	const tasks = tasksData.map((item) => {
 		const taskClassName = item.active ? "active" : "completed";
 
@@ -15,6 +19,11 @@ const TaskList = ({tasksData, onToggleDone, onDeleteTask}) => {
 					onToggleDone={onToggleDone}
 					taskId={item.id}
 					onDeleteTask={onDeleteTask}
+<<<<<<< Updated upstream
+=======
+					setTimeInState={setTimeInState}
+					onTimerPaused={onTimerPaused}
+>>>>>>> Stashed changes
 				/>
 			</li>
 		);
@@ -39,6 +48,11 @@ TaskList.propTypes = {
 	),
 	onToggleDone: PropTypes.func,
 	onDeleteTask: PropTypes.func,
+<<<<<<< Updated upstream
+=======
+	setTimeInState: PropTypes.func,
+	onTimerPaused: PropTypes.func
+>>>>>>> Stashed changes
 };
 
 export default TaskList;

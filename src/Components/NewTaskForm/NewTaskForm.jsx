@@ -1,7 +1,8 @@
-import React from "react";
+import { useMemo, useState } from "react";
 import "./NewTaskForm.css";
 import PropTypes from "prop-types";
 
+<<<<<<< Updated upstream
 class NewTaskForm extends React.Component {
   constructor() {
     super()
@@ -27,9 +28,56 @@ class NewTaskForm extends React.Component {
 			onAddTask(this.state.currentInputValue);
 			this.setState({
 				currentInputValue: "",
-			});
-		};
+=======
+const NewTaskForm = ({ onAddTask }) => {
 
+	const initialState = useMemo(() => {
+		return {
+			currentNameInputValue: "",
+			currentMinutesInputValue: "",
+			currentSecondsInputValue: "",
+		}
+	}, [])
+
+	const [inputValues, setInputValues] = useState(initialState)
+
+	const onSubmit = (e) => {
+		e.preventDefault();
+
+		if (inputValues.currentNameInputValue === "") {
+			return;
+		} else if (inputValues.currentNameInputValue.trim() === "") {
+			setInputValues(initialState);
+			return;
+		}
+
+		onAddTask(inputValues.currentNameInputValue, {
+			minutes: Number(inputValues.currentMinutesInputValue),
+			seconds: Number(inputValues.currentSecondsInputValue),
+		});
+
+		setInputValues(initialState);
+	};
+
+	const onChange = (e, name, validation) => {
+		if (
+			(validation === "number" && !!Number(e.target.value) && e.target.value <= 60) ||
+			e.target.value.length === 0
+		) {
+			setInputValues({
+				...inputValues,
+				[name]: e.target.value,
+			});
+		} else if (validation === "none") {
+			setInputValues({
+				...inputValues,
+				[name]: e.target.value,
+>>>>>>> Stashed changes
+			});
+		}
+	};
+
+<<<<<<< Updated upstream
 		const onChange = (e) => {
 			this.setState({
 				currentInputValue: e.target.value,
@@ -48,6 +96,40 @@ class NewTaskForm extends React.Component {
 			</form>
 		);
 	}
+=======
+	return (
+		<form onSubmit={onSubmit} className="new-todo-form">
+			<input
+				className="new-todo"
+				placeholder="What needs to be done?"
+				autoFocus
+				onChange={(e) => onChange(e, "currentNameInputValue", "none")}
+				value={inputValues.currentNameInputValue}
+			/>
+			<input
+				className="new-todo-form__timer"
+				placeholder="Min"
+				onChange={(e) => onChange(e, "currentMinutesInputValue", "number")}
+				value={inputValues.currentMinutesInputValue}
+				maxLength={2}
+			/>
+			<input
+				className="new-todo-form__timer"
+				placeholder="Sec"
+				onChange={(e) => onChange(e, "currentSecondsInputValue", "number")}
+				value={inputValues.currentSecondsInputValue}
+				maxLength={2}
+			/>
+			<button
+				type="submit"
+				style={{
+					width: 0,
+					height: 0,
+				}}
+			></button>
+		</form>
+	);
+>>>>>>> Stashed changes
 }
 
 NewTaskForm.defaultProps = {
@@ -55,7 +137,7 @@ NewTaskForm.defaultProps = {
 };
 
 NewTaskForm.propTypes = {
-	onAddTask: PropTypes.func,
+	onAddTask: PropTypes.func
 };
 
 export default NewTaskForm;
